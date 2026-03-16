@@ -146,8 +146,8 @@ Navigation
 		};
 		nav_layer {
 			bindings = <
-	&kp F1           &kp F2        &kp F3        &kp F4        &none            &none            &kp LC(LEFT)     &kp UP           &kp LC(RIGHT)    &kp screenshot   
-	&am LCTRL F5     &kp F6        &kp F7        &kp F8        &none            &none            &kp LEFT         &kp DOWN         &kp RIGHT        &none
+	&kp F1           &kp F2        &kp F3        &kp F4        &none            &kp PG_UP        &kp LC(LEFT)     &kp UP           &kp LC(RIGHT)    &kp screenshot   
+	&am LCTRL F5     &kp F6        &kp F7        &kp F8        &none            &kp PG_DN        &kp LEFT         &kp DOWN         &kp RIGHT        &none
 	&am LSHFT F9     &kp F10       &kp F11       &kp F12       &trans           &kp C_PREV       &kp C_PP         &kp C_NEXT       &kp C_VOL_UP     &kp C_VOL_DN    
                                                  &trans        &trans           &trans           &trans   
 			>;
