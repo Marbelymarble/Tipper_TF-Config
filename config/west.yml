@@ -10,7 +10,7 @@ manifest:
       import: app/west.yml
     - name: tipper-tf-module
       remote: Marbelymarble
-      revision:main
+      revision: main
   self:
     path: config
 
