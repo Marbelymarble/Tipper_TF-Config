@@ -55,46 +55,47 @@ void battery_status_init() {
 
 K_MUTEX_DEFINE(battery_status_mutex);
 
-struct {
+
+struct battery_status_state {
     uint8_t level;
-#if IS_ENABLED(CONFIG_USB)
+#if IS_ENABLED(CONFIG_USB_DEVICE_STACK)
     bool usb_present;
 #endif
-} battery_status_state;
+};
 
-void set_battery_symbol(lv_obj_t *icon) {
+void set_battery_symbol(lv_obj_t *icon, struct battery_status_state state) {
 
     k_mutex_lock(&battery_status_mutex, K_FOREVER);
 
-    uint8_t level = battery_status_state.level;
+    uint8_t level = state.level;
 
 #if IS_ENABLED(CONFIG_USB)
     if (level > 75) {
-        if (battery_status_state.usb_present) {
+        if (state.usb_present) {
              lv_img_set_src(icon, &bat_100_c);
         }else{
             lv_img_set_src(icon, &bat_100);
         }
     } else if (level > 50) {
-        if (battery_status_state.usb_present) {
+        if (state.usb_present) {
              lv_img_set_src(icon, &bat_75_c);
         }else{
             lv_img_set_src(icon, &bat_75);
         }
     } else if (level > 25) {
-        if (battery_status_state.usb_present) {
+        if (state.usb_present) {
              lv_img_set_src(icon, &bat_50_c);
         }else{
             lv_img_set_src(icon, &bat_50);
         }
     } else if (level > 5) {
-        if (battery_status_state.usb_present) {
+        if (state.usb_present) {
              lv_img_set_src(icon, &bat_25_c);
         }else{
             lv_img_set_src(icon, &bat_25);
         }
     } else {
-        if (battery_status_state.usb_present) {
+        if (state.usb_present) {
              lv_img_set_src(icon, &bat_00_c);
         }else{
             lv_img_set_src(icon, &bat_00);
@@ -117,7 +118,7 @@ int zmk_widget_battery_status_init(struct zmk_widget_battery_status *widget, lv_
     lv_obj_add_style(widget->obj, LV_LABEL_PART_MAIN, &label_style);
 
     //lv_obj_set_size(widget->obj, 40, 15);
-    set_battery_symbol(widget->obj);
+    set_battery_symbol(widget->obj, state);
 
     sys_slist_append(&widgets, &widget->node);
 
@@ -130,7 +131,7 @@ lv_obj_t *zmk_widget_battery_status_obj(struct zmk_widget_battery_status *widget
 
 void battery_status_update_cb(struct k_work *work) {
     struct zmk_widget_battery_status *widget;
-    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_battery_symbol(widget->obj); }
+    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_battery_symbol(widget->obj, state); }
 }
 
 K_WORK_DEFINE(battery_status_update_work, battery_status_update_cb);
