@@ -1,17 +1,14 @@
 manifest:
   remotes:
     - name: zmkfirmware
-      url-base: https://github.com/zmkfirmware
+      url-base: https://github.com/weteor
     - name: Marbelymarble
       url-base: https://github.com/Marbelymarble
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      revision: Tipper_TF_rev2
       import: app/west.yml
-    - name: tipper-tf-module
-      remote: Marbelymarble
-      revision: main
   self:
     path: config
 
